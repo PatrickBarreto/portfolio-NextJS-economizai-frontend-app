@@ -31,7 +31,7 @@ export const Api = async <T = unknown>(path: string, info:RequestInit = {
 
   try{
 
-    const data = await fetch(process.env.API_BASE_URL+path, info)
+    const data:any = await fetch(process.env.API_BASE_URL+path, info)
 
     if (!data.ok) {
       throw new Error(`HTTP ${data.status}`)
