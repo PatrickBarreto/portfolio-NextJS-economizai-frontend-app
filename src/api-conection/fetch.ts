@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
 import '../../envConfig'
+import { setToken } from '@/app/(prothected)/_checkToken/checkToken'
 
 export const prepareQueryStrings = (ontions:{
   [key:string]: string
@@ -27,26 +28,16 @@ export const Api = async <T = unknown>(path: string, info:RequestInit = {
     'Authorization': authorization?.value || ''
     } : info.headers
     
-  info.body = (info.body) ? JSON.stringify(info.body) : undefined
+  info.body = (info.body) ? info.body : undefined
 
   try{
-
     const data:any = await fetch(process.env.API_BASE_URL+path, info)
 
-    if (!data.ok) {
-      throw new Error(`HTTP ${data.status}`)
-    }
-
-    cookieStorage.set({
-      name: 'authorization',
-      value: data.headers.authorization,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
-    })
-   
     const jsonData = await data.json()
+
+    if(data.headers.get('authorization')){
+      setToken(data.headers.get('authorization'))
+    }
 
     return {
       status: data.status,
