@@ -51,3 +51,23 @@ export const Update = async (id:string, body:any) => {
     status: responseApi.status
   }
 }
+
+export const Create = async (body:any) => {
+  const categories = JSON.parse(body.categories).map((c)=>{
+    return c.id
+  })
+  const responseApi:any = await Api('/product', {
+    method: 'POST',
+    body: JSON.stringify({
+      name: body.name || '',
+      type: body.type,
+      categories
+    })
+  });
+  revalidatePath('/products')
+  return {
+    ok: responseApi.status === 200,
+    body: responseApi.data,
+    status: responseApi.status
+  }
+}

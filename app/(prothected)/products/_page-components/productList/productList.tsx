@@ -2,9 +2,10 @@
 import { CustomItem } from "@/src/custom-components/item/item"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { deleteProduct } from "../../productsApi"
+import { deleteProduct, findProducts } from "../../productsApi"
 import { UpdateProductDialog } from "../dialogs/update"
 import { Input } from "@/components/ui/input"
+import { CreateProductDialog } from "../dialogs/create"
 
 export const ProductList = ({products, categories}:{
   products:any[]
@@ -14,6 +15,8 @@ export const ProductList = ({products, categories}:{
   const [editingProduct, setEditingProduct] = useState(null)
   const [open, setOpen] = useState(false)
   const [productsList, setProducts] = useState(products)
+  const [productsUpdate, setProductsUpdate] = useState(false)
+  const [newProduct, setNewProduct] = useState(false)
 
   const filter = (list:any[], toFind:string) => {
     return list.filter(product => 
@@ -23,15 +26,27 @@ export const ProductList = ({products, categories}:{
 
   const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if(e.target.value){
-      setProducts(filter(productsList, e.target.value))
+      setProducts(filter(products, e.target.value))
     }else{
       setProducts(products)
     }
   }
 
   useEffect(()=>{
-    setProducts(productsList)
-  },[productsList])
+    const findProductsList = async () => {
+      if(productsUpdate){
+        const products = await (await findProducts()).body
+        setProducts(products)
+        setProductsUpdate(false)
+        return
+      }else{
+        setProducts(productsList)
+      }
+    }
+
+    findProductsList()
+    
+  },[productsList, productsUpdate])
 
   return (
     <>
@@ -39,7 +54,10 @@ export const ProductList = ({products, categories}:{
          <div className="flex flex-row w-full md:w-1/2">
             <Input className="" onChange={searchHandler} id="input-button-group" placeholder="Type to search..." />
         </div>
-        <Button variant={'default'}> New </Button>
+        <Button variant={'default'} onClick={()=>{
+          setOpen(true)
+          setNewProduct(true)
+          }}> New </Button>
       </div>
 
       <ul className="flex flex-col gap-5 w-full">
@@ -85,6 +103,7 @@ export const ProductList = ({products, categories}:{
             })
           }
       </ul>
+
       {editingProduct && (
         <UpdateProductDialog
           product={editingProduct}
@@ -93,7 +112,19 @@ export const ProductList = ({products, categories}:{
             setEditingProduct(null)
             setProducts(products)
           }}
-          onSubmit={() => {
+          onSubmit={() => {}}
+          open={open}
+        />
+      )}
+
+      {newProduct && (
+        <CreateProductDialog
+          categories={categories}
+          onClose={() => {
+            setNewProduct(false)
+          }}
+          onSubmit={async () => {
+            setProductsUpdate(true)
           }}
           open={open}
         />
