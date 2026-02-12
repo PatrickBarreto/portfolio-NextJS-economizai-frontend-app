@@ -14,10 +14,12 @@ export const SingInForm = () => {
   const router = useRouter()
   
   useEffect(()=>{
-    if(state?.ok){
-      router.push('/home')
-    }else{
-      alert("<h1> ops</h1>")
+    if(state){
+      if(state.ok){
+        router.push('/home')
+      }else{
+        alert("<h1> ops</h1>")
+      }
     }
   },[state])
 
