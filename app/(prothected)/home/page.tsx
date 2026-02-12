@@ -1,7 +1,11 @@
-export default function Home() {
+import { checkToken, logout } from "../_checkToken/checkToken"
+
+export default async function Home() {
+  await checkToken()
+
   return(
     <>
-      <h1> hello world </h1>
+      <h1> </h1>
     </>
   )
 }
