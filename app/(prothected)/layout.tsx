@@ -3,6 +3,7 @@ import "../globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { NavMenu } from "@/src/custom-components/menu-nav/menu-links";
 import { CustomSidebar } from "@/src/custom-components/sidebar/sidebar";
+import { checkToken } from "./_checkToken/checkToken";
 
 export const metadata: Metadata = {
   title: "Wise Spend",
@@ -15,6 +16,7 @@ export default async function ProthectedLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await checkToken()
 
   const privateMenuLinks = [
     {label: 'Categories', link: '/categories', id:'categories'},
@@ -28,7 +30,7 @@ export default async function ProthectedLayout({
       <body
         className={''}
       >
-        <SidebarProvider className="bg-green-100">
+        <SidebarProvider className="bg-green-100 overflow-auto">
           <CustomSidebar>
             <NavMenu menuList={privateMenuLinks} className="flex flex-col gap-5 p-5 text-sm"></NavMenu>
           </CustomSidebar>    
