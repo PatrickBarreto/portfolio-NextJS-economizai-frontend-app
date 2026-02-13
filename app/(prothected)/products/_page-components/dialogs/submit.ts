@@ -25,7 +25,7 @@ export const UpdateProduct = async (prev:any, formData:FormData) => {
   await Update(id, parsed)
 
   return {
-    ...Product,
+    ...parsed,
     categories: JSON.parse(JSON.stringify(categoriesText))
   }
 }

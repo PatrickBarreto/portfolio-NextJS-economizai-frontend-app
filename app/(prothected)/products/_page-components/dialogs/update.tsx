@@ -17,10 +17,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox"
 import { useEffect, useState } from "react"
 import { DetailProduct } from "../../productsApi"
-import { CustomForm } from "@/src/custom-components/server/form/Form"
 import { UpdateProduct } from "./submit"
 import Form from "next/form"
 import { useActionState } from "react"
+
 
 export function UpdateProductDialog({
   product,
@@ -45,20 +45,21 @@ export function UpdateProductDialog({
     const findProductCategory = async () => {
       if (!product.id) return
 
-      setName(state?.name ? String(state?.name) : product.name)
-      setType(state?.type ? String(state?.type) : product.type)
-
-      if(state?.categories){
-        setProductCategories(JSON.parse(state?.categories))
+      if(state){
+        setName(state.name ? String(state.name) : product.name)
+        setType(state.type ? String(state.type) : product.type)
+        setProductCategories(JSON.parse(state.categories ? state.categories : product.categories))
       }else{
+        setName( product.name)
+        setType( product.type )
         const {categories} = (await DetailProduct(product.id)).body
-         setProductCategories(categories)
+        setProductCategories(categories)
       }
-
+      onSubmit()
     } 
     findProductCategory()
   }, [state])
- 
+
   return (
     <Dialog open={open} onOpenChange={()=>{
        if (open) {
@@ -146,7 +147,7 @@ export function UpdateProductDialog({
               <DialogClose asChild>
                 <Button className={'cursor-pointer'} variant="outline" onClick={onClose} >Cancel</Button>
               </DialogClose>
-              <Button className={'cursor-pointer'} type="submit" onClick={onSubmit}>Save changes</Button>
+              <Button className={'cursor-pointer'} type="submit">Save changes</Button>
             </DialogFooter>
           </Form>
         </DialogContent>

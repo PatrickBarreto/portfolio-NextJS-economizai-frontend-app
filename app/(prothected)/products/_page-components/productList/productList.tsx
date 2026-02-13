@@ -15,7 +15,7 @@ export const ProductList = ({products, categories}:{
   const [editingProduct, setEditingProduct] = useState(null)
   const [open, setOpen] = useState(false)
   const [productsList, setProducts] = useState(products)
-  const [productsUpdate, setProductsUpdate] = useState(false)
+  const [reload, setReload] = useState(false)
   const [newProduct, setNewProduct] = useState(false)
 
   const filter = (list:any[], toFind:string) => {
@@ -31,28 +31,27 @@ export const ProductList = ({products, categories}:{
       setProducts(products)
     }
   }
+  // O problema é que o reload está sendo feito antes do submit do update, ou seja, não pega o produto que foi atualizado no backend. 
 
   useEffect(()=>{
     const findProductsList = async () => {
-      if(productsUpdate){
-        const products = await (await findProducts()).body
-        setProducts(products)
-        setProductsUpdate(false)
+      if(reload){
+        const productx = await (await findProducts()).body
+        setProducts(productx)
+        setReload(false)
         return
-      }else{
-        setProducts(productsList)
       }
     }
 
     findProductsList()
     
-  },[productsList, productsUpdate])
+  },[reload, products])
 
   return (
     <>
       <div className="flex gap-15 ">
          <div className="flex flex-row w-full md:w-1/2">
-            <Input className="" onChange={searchHandler} id="input-button-group" placeholder="Type to search..." />
+            <Input className=""  id="input-button-group" placeholder="Type to search..." />
         </div>
         <Button variant={'default'} onClick={()=>{
           setOpen(true)
@@ -91,6 +90,7 @@ export const ProductList = ({products, categories}:{
                         size="sm"
                         onClick={() => {
                           deleteProduct(p.id)
+                          setReload(true)
                           }
                         }
                       >
@@ -110,9 +110,10 @@ export const ProductList = ({products, categories}:{
           categories={categories}
           onClose={() => {
             setEditingProduct(null)
-            setProducts(products)
           }}
-          onSubmit={() => {}}
+          onSubmit={() => {
+            setReload(true)
+          }}
           open={open}
         />
       )}
@@ -123,8 +124,8 @@ export const ProductList = ({products, categories}:{
           onClose={() => {
             setNewProduct(false)
           }}
-          onSubmit={async () => {
-            setProductsUpdate(true)
+          onSubmit={() => {
+            setReload(true)
           }}
           open={open}
         />

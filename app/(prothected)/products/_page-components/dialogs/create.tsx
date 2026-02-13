@@ -37,7 +37,8 @@ export function CreateProductDialog({
   const [type, setType] = useState<any>('')
 
   useEffect(()=>{
-
+    state
+    onSubmit()
   }, [state])
  
   return (
@@ -120,7 +121,7 @@ export function CreateProductDialog({
               <DialogClose asChild>
                 <Button className={'cursor-pointer'} variant="outline" onClick={onClose} >Cancel</Button>
               </DialogClose>
-              <Button className={'cursor-pointer'} type="submit" onClick={onSubmit}>Save</Button>
+              <Button className={'cursor-pointer'} type="submit">Save</Button>
             </DialogFooter>
           </Form>
         </DialogContent>
