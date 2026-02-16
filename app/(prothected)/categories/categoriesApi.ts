@@ -3,6 +3,22 @@
 import { Api } from "@/src/api-conection/fetch";
 import { revalidatePath } from "next/cache";
 
+
+export const Create = async (body:any) => {
+  body = JSON.stringify(body)
+  const responseApi:any = await Api('/category', {
+    method: 'POST',
+    body: body
+  });
+  
+  return {
+    ok: responseApi.status === 200,
+    body: responseApi.data,
+    status: responseApi.status
+  }
+}
+
+
 export const Find = async () => {
   const responseApi:any = await Api('/categories');
   
@@ -12,6 +28,17 @@ export const Find = async () => {
     status: responseApi.status
   }
 }
+
+export const Detail = async (id:number) => {
+  const responseApi:any = await Api('/category/'+id);
+  
+  return {
+    ok: responseApi.status === 200,
+    body: responseApi.data,
+    status: responseApi.status
+  }
+}
+
 export const Delete = async (id: number) => {
   const responseApi:any = await Api('/category/'+id, {
     method: 'DELETE'
