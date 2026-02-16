@@ -42,7 +42,7 @@ export function UpdateProductDialog({
   const [name, setName] = useState<any>('')
 
   useEffect(()=>{
-    const findProductCategory = async () => {
+    const reload = async () => {
       if (!product.id) return
 
       if(state){
@@ -57,7 +57,7 @@ export function UpdateProductDialog({
       }
       onSubmit()
     } 
-    findProductCategory()
+    reload()
   }, [state])
 
   return (

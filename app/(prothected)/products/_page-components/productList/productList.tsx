@@ -36,8 +36,8 @@ export const ProductList = ({products, categories}:{
   useEffect(()=>{
     const findProductsList = async () => {
       if(reload){
-        const productx = await (await findProducts()).body
-        setProducts(productx)
+        const product = await (await findProducts()).body
+        setProducts(product)
         setReload(false)
         return
       }
@@ -45,13 +45,13 @@ export const ProductList = ({products, categories}:{
 
     findProductsList()
     
-  },[reload, products])
+  },[reload])
 
   return (
     <>
       <div className="flex gap-15 ">
          <div className="flex flex-row w-full md:w-1/2">
-            <Input className=""  id="input-button-group" placeholder="Type to search..." />
+            <Input className="" onChange={searchHandler} id="input-button-group" placeholder="Type to search..." />
         </div>
         <Button variant={'default'} onClick={()=>{
           setOpen(true)

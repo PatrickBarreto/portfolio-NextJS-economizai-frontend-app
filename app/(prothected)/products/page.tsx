@@ -8,6 +8,7 @@ export default async function Products() {
 
   return(
     <div className="flex flex-col gap-15 w-full mt-10 px-10">
+      <h1>Products</h1>
       <ProductList products={products.body} categories={categories} />
     </div>
   )

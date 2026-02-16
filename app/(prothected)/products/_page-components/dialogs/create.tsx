@@ -37,7 +37,6 @@ export function CreateProductDialog({
   const [type, setType] = useState<any>('')
 
   useEffect(()=>{
-    state
     onSubmit()
   }, [state])
  
