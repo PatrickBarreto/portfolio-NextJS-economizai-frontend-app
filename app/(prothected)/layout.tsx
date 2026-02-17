@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "../globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { NavMenu } from "@/src/custom-components/menu-nav/menu-links";
-import { CustomSidebar } from "@/src/custom-components/sidebar/sidebar";
+import { NavMenu } from "@/components/custom-components/menu-nav/menu-links";
+import { CustomSidebar } from "@/components/custom-components/sidebar/sidebar";
 import { checkToken } from "./_checkToken/checkToken";
 
 export const metadata: Metadata = {

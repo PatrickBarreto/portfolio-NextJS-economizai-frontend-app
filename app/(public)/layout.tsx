@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "../globals.css";
-import { NavMenu } from "@/src/custom-components/menu-nav/menu-links";
+import { NavMenu } from "@/components/custom-components/menu-nav/menu-links";
 import Link from "next/link";
-import { TopMenuNavigation } from "@/src/custom-components/server/header";
+import { TopMenuNavigation } from "@/components/custom-components/server/header";
 import Image from "next/image";
 
 
