@@ -1,9 +1,9 @@
 'use client'
 
-import { CustomForm } from "@/src/custom-components/server/form/Form"
+import { CustomForm } from "@/components/custom-components/server/form/Form"
 import { useFormState } from "react-dom";
 import { SingUpSubmit } from "./submit";
-import CustomInput from "@/src/custom-components/server/form/Input";
+import CustomInput from "@/components/custom-components/server/form/Input";
 
 
 export const SingUpForm = () => {

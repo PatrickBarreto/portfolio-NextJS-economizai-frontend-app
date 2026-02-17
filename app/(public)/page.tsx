@@ -1,4 +1,4 @@
-import { NavButton } from "@/src/custom-components/client/nav-button";
+import { NavButton } from "@/components/custom-components/client/nav-button";
 
 export default function LadingPage() {
   return(

@@ -1,9 +1,9 @@
 'use client'
 
-import { CustomForm } from "@/src/custom-components/server/form/Form"
+import { CustomForm } from "@/components/custom-components/server/form/Form"
 import { useFormState } from "react-dom";
 import { SingInSubmit } from "./submit";
-import CustomInput from "@/src/custom-components/server/form/Input";
+import CustomInput from "@/components/custom-components/server/form/Input";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
