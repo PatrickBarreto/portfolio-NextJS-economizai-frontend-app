@@ -1,5 +1,5 @@
 import { findProducts } from "./_services/productsApi"
-import { Find } from "../categories/categoriesApi"
+import { Find } from "../categories/_services/categoriesApi"
 import { List } from "./_components/list/productList"
 
 export default async function Products() {

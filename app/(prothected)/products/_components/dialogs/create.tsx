@@ -1,4 +1,5 @@
 'use client'
+import { useEffect, useState, useActionState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -8,17 +9,23 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
+import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
- import { Field, FieldGroup } from "@/components/ui/field"
- import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import { useEffect, useState } from "react"
-import { CreateProduct } from "../../_actions/submit"
+
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Create } from "../../_actions/submit"
 import Form from "next/form"
-import { useActionState } from "react"
+
+type createProductDialo = {
+  content: {
+    categories: any[]
+  }
+  onClose: ()=>void
+  onSubmit: ()=>void
+}
 
 export function CreateDialog({
   content:{
@@ -26,18 +33,11 @@ export function CreateDialog({
   },
   onClose,
   onSubmit,
-}:{
-  content: {
-    categories: any[]
-  }
-  onClose: ()=>void
-  onSubmit: ()=>void
-}) {
+}:createProductDialo) {
 
-  const [state, action] = useActionState(CreateProduct, null)
+  const [state, action] = useActionState(Create, null)
   const [productCategories, setProductCategories] = useState<any[]>([])
   const [type, setType] = useState<any>('')
-  const [open, setOpen] = useState<boolean>(true)
 
   useEffect(()=>{
     if(state){
@@ -46,7 +46,7 @@ export function CreateDialog({
   }, [state])
  
   return (
-    <Dialog open={open} onOpenChange={()=>{}}>
+    <Dialog open={true} onOpenChange={()=>{}}>
         <DialogContent className="md:w-md">
           <Form className="flex flex-col gap-10 p-5" action={action} > 
             <div className="flex flex-col gap-6">

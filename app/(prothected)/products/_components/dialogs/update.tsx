@@ -41,7 +41,6 @@ export function UpdateProductDialog({
   const [productCategories, setProductCategories] = useState<any[]>([])
   const [type, setType] = useState<any>('')
   const [name, setName] = useState<any>('')
-  const [open, setOpen] = useState<boolean>(true)
   
   useEffect(()=>{
     const reload = async () => {
@@ -64,10 +63,7 @@ export function UpdateProductDialog({
   }, [state])
 
   return (
-    <Dialog open={open} onOpenChange={()=>{
-       if (open) {
-        setOpen(false)
-      }}}>
+    <Dialog open={true} onOpenChange={()=>{}}>
         <DialogContent className="md:w-md">
           <Form className="flex flex-col gap-10 p-5" action={action} > 
             <div className="flex flex-col gap-6">

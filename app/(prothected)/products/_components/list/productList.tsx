@@ -9,6 +9,7 @@ import { searchHandler } from "@/src/search/search"
 import { useProducts } from "../../_hooks/useProducts"
 import { Search } from "@/components/custom-components/search/search"
 import { UpdateDeleteButton } from "@/components/custom-components/button/update-delete"
+import { useToggles } from "@/hooks/useToggles"
 
 
 type ProductList = {
@@ -23,22 +24,17 @@ export const List = ({products, categories}:ProductList) => {
   const [newItem, setNewItem] = useState(false)
 
   const { items, setItems, remove } = useProducts(products)
+  
+  const {ToggleCreate, ToggleUpdate} = useToggles({
+    defaultList: products,
+    newItem,
+    setItems, 
+    setSelected,
+    setNewItem
+  })
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setItems(searchHandler(products, e.target.value))
-  }
-
-  const ToggleCreate = (product?:any) => {
-    if(product){
-      setItems(product)
-    }
-    setNewItem(!newItem)
-  }
-  const ToggleUpdate = (product?:any) => {
-    if(product){
-      setItems(products)
-    }
-    setSelected(product || null)
   }
 
   return (
@@ -50,7 +46,7 @@ export const List = ({products, categories}:ProductList) => {
 
       <ul className="flex flex-col gap-5 w-full">
         {  
-          items.map(p => {
+          items?.map(p => {
             return (
               <li key={p.id}>
                 <CustomItem
@@ -78,7 +74,7 @@ export const List = ({products, categories}:ProductList) => {
             categories: categories
           }}
           onClose={() => ToggleUpdate()}
-          onSubmit={() => ToggleUpdate(products)}
+          onSubmit={() => ToggleUpdate(selected)}
         />
       )}
 
@@ -88,7 +84,7 @@ export const List = ({products, categories}:ProductList) => {
             categories
           }}
           onClose={() => ToggleCreate()}
-          onSubmit={() => ToggleCreate(products)}
+          onSubmit={() => ToggleCreate()}
         />
       )}
     </>
