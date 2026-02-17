@@ -1,7 +1,7 @@
-import { findProducts } from "../products/productsApi"
-import { List } from "./_page-components/list/list"
+import { findProducts } from "../products/_services/productsApi"
+import { List } from "./_components/list/list"
 import { Find as findBrands } from "../brands/brandsApi"
-import { Find as findCategory} from "./categoriesApi"
+import { Find as findCategory} from "./_services/categoriesApi"
 
 export default async function Categories() {
   const categories = await (await findCategory()).body

@@ -10,7 +10,7 @@ export const Create = async (body:any) => {
     method: 'POST',
     body: body
   });
-  
+  revalidatePath('/categories')
   return {
     ok: responseApi.status === 200,
     body: responseApi.data,
@@ -56,6 +56,8 @@ export const Update = async (id:number, body:any) => {
     method: 'PUT',
     body: body
   });
+
+  revalidatePath('/categories')
 
   return {
     ok: responseApi.status === 200,

@@ -8,36 +8,36 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
  import { Field, FieldGroup } from "@/components/ui/field"
  import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useEffect, useState } from "react"
-import { Detail } from "../../categoriesApi"
-import { CustomForm } from "@/src/custom-components/server/form/Form"
-import { Update } from "./submit"
+import { Detail } from "../../_services/categoriesApi"
+import { Update } from "../../_actions/submit"
 import Form from "next/form"
 import { useActionState } from "react"
 
-
-export function UpdateDialog({
-  category,
-  products,
-  brands,
-  onClose,
-  onSubmit,
-  open
-}:{
-  category: any
-  products: any[]
-  brands: any[]
+type UpdateCategoryDialog = {
+  content:{
+    category: any
+    products: any[]
+    brands: any[]
+  }
   onClose: ()=>void
   onSubmit: ()=>void
-  open: boolean
-}) {
+}
+
+export function UpdateDialog({
+  content:{
+    category,
+    products,
+    brands,
+  },
+  onClose,
+  onSubmit,
+}:UpdateCategoryDialog) {
 
   const [state, action] = useActionState(Update, null)
   const [name, setName] = useState<any>('')
@@ -54,27 +54,19 @@ export function UpdateDialog({
         setName(state?.name ? state.name : category.name)
         setCategoryProducts(state?.products || categoryDetail.products.map(i=>i.products_id))
         setCategoryBrands(state?.brands || categoryDetail.brands.map(i=>i.brands_id))
+        onSubmit()
       }else{
         setName(category.name)
         setCategoryProducts(categoryDetail.products.map(i=>i.products_id))
         setCategoryBrands(categoryDetail.brands.map(i=>i.brands_id))
       }
-  
-
-    if(state){
-      onSubmit()
-    }
-
     }
     
     reload()
   }, [state])
  
   return (
-    <Dialog open={open} onOpenChange={()=>{
-       if (open) {
-        onClose()
-      }}}>
+    <Dialog open={true} onOpenChange={()=>{}}>
         <DialogContent className="md:w-md">
           <Form className="flex flex-col gap-10 p-5" action={action} > 
             <div className="flex flex-col gap-6">
@@ -165,7 +157,7 @@ export function UpdateDialog({
             </div>
             <DialogFooter>
               <DialogClose asChild>
-                <Button className={'cursor-pointer'} variant="outline" onClick={()=>onClose} >Cancel</Button>
+                <Button className={'cursor-pointer'} variant="outline" onClick={onClose} >Cancel</Button>
               </DialogClose>
               <Button className={'cursor-pointer'} type="submit">Save changes</Button>
             </DialogFooter>

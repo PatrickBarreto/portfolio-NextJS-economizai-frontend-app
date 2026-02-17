@@ -1,4 +1,5 @@
 'use client'
+import { useEffect, useState, useActionState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -8,48 +9,46 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
- import { Field, FieldGroup } from "@/components/ui/field"
+ import { Field } from "@/components/ui/field"
  import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import { useEffect, useState } from "react"
-import { CreateProduct } from "./submit"
-import Form from "next/form"
-import { useActionState } from "react"
 
-export function CreateDialog({
-  brands,
-  products,
-  onClose,
-  onSubmit,
-  open
-}:{
-  brands: any[]
-  products: any[]
+import { Create } from "../../_actions/submit"
+import Form from "next/form"
+
+type createCategorieDialog = {
+  content:{
+    brands: any[]
+    products: any[]  
+  }
   onClose: ()=>void
   onSubmit: ()=>void
-  open: boolean
-}) {
+}
 
-  const [state, action] = useActionState(CreateProduct, null)
+export function CreateDialog({
+  content:{
+    brands,
+    products,
+  },
+  onClose,
+  onSubmit,
+}:createCategorieDialog) {
+
+  const [state, action] = useActionState(Create, null)
   const [categoryProducts, setProductCategories] = useState<any[]>([])
   const [categoryBrands, setCategoryBrands] = useState<any[]>([])
 
-  useEffect(()=>{
+    useEffect(()=>{
     if(state){
       onSubmit()
-      setProductCategories(state?.products || [])
-      setCategoryBrands(state?.brands || [])
     }
   }, [state])
+ 
 
   return (
-    <Dialog open={open} onOpenChange={()=>{
-       if (open) {
-        onClose()
-      }}}>
+    <Dialog open={true} onOpenChange={()=>{}}>
         <DialogContent className="md:w-md">
           <Form className="flex flex-col gap-10 p-5" action={action} > 
             <div className="flex flex-col gap-6">
