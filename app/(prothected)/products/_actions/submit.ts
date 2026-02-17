@@ -1,8 +1,9 @@
 import z from "zod"
-import {Create, Update} from "../../productsApi"
-import Categories from "../../../categories/page"
+import {Create, Update as updateProduct} from "../_services/productsApi"
+import Categories from "../../categories/page"
 
-export const UpdateProduct = async (prev:any, formData:FormData) => {
+export const Update = async (prev:any, formData:FormData) => {
+ 
   const id = formData.get('productId')
   const name = formData.get('name') || null
   const type = formData.get('type')
@@ -22,7 +23,7 @@ export const UpdateProduct = async (prev:any, formData:FormData) => {
 
   const parsed = productSchemma.parse(Product)
   
-  await Update(id, parsed)
+  await updateProduct(id, parsed)
 
   return {
     ...parsed,
@@ -38,7 +39,7 @@ export const CreateProduct = async (prev:any, formData:FormData) => {
   const productSchemma = z.object({
     name: z.string().optional(),
     type: z.string().optional(),
-    categories: z.string()
+    categories: z.string().optional()
   })
 
   const Product = {

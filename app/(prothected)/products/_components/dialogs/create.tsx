@@ -16,62 +16,44 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useEffect, useState } from "react"
-import { DetailProduct } from "../../productsApi"
-import { UpdateProduct } from "./submit"
+import { CreateProduct } from "../../_actions/submit"
 import Form from "next/form"
 import { useActionState } from "react"
 
-
-export function UpdateProductDialog({
-  product,
-  categories,
+export function CreateDialog({
+  content:{
+    categories
+  },
   onClose,
   onSubmit,
-  open
 }:{
-  product: any
-  categories: any[]
+  content: {
+    categories: any[]
+  }
   onClose: ()=>void
   onSubmit: ()=>void
-  open: boolean
 }) {
 
-  const [state, action] = useActionState(UpdateProduct, null)
+  const [state, action] = useActionState(CreateProduct, null)
   const [productCategories, setProductCategories] = useState<any[]>([])
   const [type, setType] = useState<any>('')
-  const [name, setName] = useState<any>('')
+  const [open, setOpen] = useState<boolean>(true)
 
   useEffect(()=>{
-    const reload = async () => {
-      if (!product.id) return
-
-      if(state){
-        setName(state.name ? String(state.name) : product.name)
-        setType(state.type ? String(state.type) : product.type)
-        setProductCategories(JSON.parse(state.categories ? state.categories : product.categories))
-      }else{
-        setName( product.name)
-        setType( product.type )
-        const {categories} = (await DetailProduct(product.id)).body
-        setProductCategories(categories)
-      }
+    if(state){
       onSubmit()
-    } 
-    reload()
+    }
   }, [state])
-
+ 
   return (
-    <Dialog open={open} onOpenChange={()=>{
-       if (open) {
-        onClose()
-      }}}>
+    <Dialog open={open} onOpenChange={()=>{}}>
         <DialogContent className="md:w-md">
           <Form className="flex flex-col gap-10 p-5" action={action} > 
             <div className="flex flex-col gap-6">
               <DialogHeader>
-                <DialogTitle>Update Products</DialogTitle>
+                <DialogTitle>New Product</DialogTitle>
                 <DialogDescription>
-                Identifier: {product.id}
+                Create a new product
                 </DialogDescription>
               </DialogHeader>
             
@@ -80,14 +62,12 @@ export function UpdateProductDialog({
                 <Input 
                   name={'name'} 
                   type={"text"}
-                  placeholder={name} 
-                  defaultValue={name} 
                   required={true}
                 ></Input>
               </Field>
               <Field>
                 <Label>Type</Label>
-                <Select name={'type'} defaultValue={type}  onValueChange={setType}>
+                <Select name={'type'} onValueChange={setType}>
                   <SelectTrigger>
                     <SelectValue placeholder={'select a type'}/>
                   </SelectTrigger>
@@ -108,7 +88,6 @@ export function UpdateProductDialog({
                       return (
                         <div key={c.id} className="flex flex-row gap-3">
                           <Checkbox
-                            checked={productCategories.some((category)=> category.id == c.id)}
                             id={c.id.toString()}
                             onCheckedChange={(value) => {
                               const checked = value === true
@@ -127,14 +106,10 @@ export function UpdateProductDialog({
 
                 <input
                   type="hidden"
-                  name="productId"
-                  value={String(product.id)}
-                />
-                <input
-                  type="hidden"
                   name="type"
                   value={type}
                 />
+
                 <input
                   type="hidden"
                   name="productCategories"
@@ -147,7 +122,7 @@ export function UpdateProductDialog({
               <DialogClose asChild>
                 <Button className={'cursor-pointer'} variant="outline" onClick={onClose} >Cancel</Button>
               </DialogClose>
-              <Button className={'cursor-pointer'} type="submit">Save changes</Button>
+              <Button className={'cursor-pointer'} type="submit">Save</Button>
             </DialogFooter>
           </Form>
         </DialogContent>
