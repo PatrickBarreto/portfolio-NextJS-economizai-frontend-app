@@ -1,10 +1,15 @@
-import { checkToken } from "../_checkToken/checkToken"
+import { Find as findBrands } from "./_services/api"
+import { Find } from "../categories/_services/categoriesApi"
+import { List } from "./_components/list/list"
 
-export default async function Brands() {
-  await checkToken()
+export default async function Products() {
+  const brands = await findBrands()
+  const categories:any[] = (await Find()).body
+
   return(
-    <>
-      <h1> hello world </h1>
-    </>
+    <div className="flex flex-col gap-15 w-full mt-10 px-10">
+      <h1>Brands</h1>
+      <List brands={brands.body} categories={categories} />
+    </div>
   )
 }
