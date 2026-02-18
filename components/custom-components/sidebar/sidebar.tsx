@@ -13,10 +13,10 @@ export function CustomSidebar({children}:{
 }) {
 
   return (
-    <Sidebar className="text-white">
+    <Sidebar>
       <SidebarHeader className="bg-(--wise-spend-green)"/>
       <SidebarContent className="bg-(--wise-spend-green)">
-        <SidebarGroup>
+        <SidebarGroup className="text-white">
           {children}
         </SidebarGroup>
       </SidebarContent>
