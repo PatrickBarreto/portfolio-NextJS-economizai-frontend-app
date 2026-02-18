@@ -1,6 +1,6 @@
 import { findProducts } from "../products/_services/productsApi"
 import { List } from "./_components/list/list"
-import { Find as findBrands } from "../brands/brandsApi"
+import { Find as findBrands } from "../brands/_services/api"
 import { Find as findCategory} from "./_services/categoriesApi"
 
 export default async function Categories() {
