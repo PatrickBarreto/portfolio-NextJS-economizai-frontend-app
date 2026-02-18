@@ -1,16 +1,15 @@
 'use client'
 
 import { CustomForm } from "@/components/custom-components/server/form/Form"
-import { useFormState } from "react-dom";
 import { SingInSubmit } from "./submit";
 import CustomInput from "@/components/custom-components/server/form/Input";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 
 export const SingInForm = () => {
-  const [state, action] = useFormState(SingInSubmit, null)
+  const [state, action] = useActionState(SingInSubmit, null)
   const router = useRouter()
   
   useEffect(()=>{
