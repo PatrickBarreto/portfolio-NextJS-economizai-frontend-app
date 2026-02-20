@@ -7,6 +7,7 @@ import {
   SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar"
+import { LogOut } from "lucide-react"
  
 export function CustomSidebar({children}:{
   children: React.ReactElement
@@ -22,7 +23,7 @@ export function CustomSidebar({children}:{
       </SidebarContent>
       <SidebarFooter className="bg-(--wise-spend-green)">
         <form action={logout}>
-          <button>Logout</button>
+          <button><LogOut className="text-white"/></button>
         </form>
       </SidebarFooter>
     </Sidebar>
