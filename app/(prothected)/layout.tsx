@@ -22,7 +22,7 @@ export default async function ProthectedLayout({
     {label: 'Categories', link: '/categories', id:'categories'},
     {label: 'Products', link: '/products', id:'products'},
     {label: 'Brands', link: '/brands', id:'brands'},
-    {label: 'Shopping Lists', link: '/shopping-list', id:'shopping-list'},
+    {label: 'Shopping Lists', link: '/shopping-lists', id:'shopping-list'},
   ];
 
   return (
