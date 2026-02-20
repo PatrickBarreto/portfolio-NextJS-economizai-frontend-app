@@ -15,7 +15,7 @@ export const SingInForm = () => {
   useEffect(()=>{
     if(state){
       if(state.ok){
-        router.push('/home')
+        router.push('/shopping-lists')
       }else{
         alert("<h1> ops</h1>")
       }
