@@ -24,17 +24,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SidebarProvider className="bg-green-100 overflow-auto">
+        <SidebarProvider className="overflow-auto bg-(--wise-spend-green) md:bg-green-100">
           <div className="block md:hidden">
             <Sidebar>
-              <SidebarHeader className="bg-(--wise-spend-green)"/>
-              <SidebarContent className="bg-(--wise-spend-green)">
-                <SidebarGroup className="text-white">
-                  <NavMenu menuList={publicMenuLinks} className="md:flex flex-row gap-10 text-sm"></NavMenu>
+              <SidebarHeader className="bg-green-100"/>
+              <SidebarContent className="bg-green-100">
+                <SidebarGroup className="text-black">
+                  <NavMenu menuList={publicMenuLinks} className="
+                    flex 
+                    gap-2
+                    flex-col 
+                    md:text-sm"></NavMenu>
                 </SidebarGroup>
               </SidebarContent>
             </Sidebar>
-            <SidebarTrigger/>
+            <SidebarTrigger className="bg-(--wise-spend-green)"/>
           </div>
           <div className="hidden md:block">
           <TopMenuNavigation>

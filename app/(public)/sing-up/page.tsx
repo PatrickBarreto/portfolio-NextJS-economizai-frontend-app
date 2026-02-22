@@ -4,11 +4,28 @@ export default function singUp() {
 
   return(
     <>
-      <div className="flex flex-row h-full">
-        <div className="flex items-center w-full -mt-(--header-height) p-10">
-          <h2>Here, you always pay less for the same thing.</h2>
+       <div className="
+        flex 
+        flex-col
+        md:flex-row 
+        ">
+        <div className="
+          hidden
+          items-center 
+          w-full 
+          -mt-(--header-height) 
+          md:flex
+          ">
+            <h2>Here, you always pay less for the same thing.</h2>
         </div>
-        <div className="flex justify-center items-center w-full bg-(--wise-spend-green) p-10">
+        <div className="
+          flex
+          justify-center
+          items-center
+          h-[calc(100vh-var(--header-height))]
+          w-full 
+          bg-(--wise-spend-green)
+          ">
           <SingUpForm />
         </div>
       </div>
