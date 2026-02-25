@@ -7,23 +7,24 @@ export const Update = async (prev:any, formData:FormData) => {
   const id = formData.get('ID')
   const name = formData.get('name') || null
   const type = formData.get('type')
-  const executions = formData.get('executions')
+  const productsList = formData.get('shoppingListCategories')
   
   const  shoppingListchema = z.object({
     name: z.string().optional(),
     type: z.string().optional(),
-    executions: z.array(z.string()).optional(),
+    products: z.array(z.string()).optional(),
   })
 
   const ShoppingList = {
     name,
     type,
-    executions
+    productsList
   }
 
   const parsed =  shoppingListchema.parse(ShoppingList)
   
-  await updateShoppingList(id, parsed)
+  await updateShoppingList(String(id), parsed)
+  // await UpdateShoppingListProducts(shoppingListId.id, shoppingListLink)
 
   return {
     ...parsed
@@ -33,13 +34,15 @@ export const Update = async (prev:any, formData:FormData) => {
 export const Create = async (prev:any, formData:FormData) => {
   const name = formData.get('name') || null
   const type = formData.get('type')
-  const products = formData.get('shoppingListProducts')?.toString().split(',')
+  const products = formData.get('shoppingListCategories')
 
-  const shoppingListLink = products.map(p=>{
+  const parsedProducts:any[] = JSON.parse(String(products))
+
+  const shoppingListLink = parsedProducts?.map(p=>{
     return {
-      products_id: Number(p),
-      categories_id: 53,
-      amount: Number(formData.get('products['+p+']'))
+      products_id: p.id,
+      categories_id: p.categories_id,
+      amount: p.amount
     }
   })
   
@@ -56,10 +59,10 @@ export const Create = async (prev:any, formData:FormData) => {
   const parsed = shoppingListchema.parse(ShoppingList)
   
   const shoppingListId = (await createShoppingList(parsed)).body
-
   await CreateShoppingListProducts(shoppingListId.id, shoppingListLink)
 
   return {
-    ...parsed
+    ...parsed,
+    products: shoppingListLink
   }
 }

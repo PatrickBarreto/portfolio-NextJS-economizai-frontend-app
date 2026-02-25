@@ -56,7 +56,6 @@ export const Create = async (body:any) => {
       type: body.type
     })
   });
-  revalidatePath('/shopping-lists')
   return {
     ok: responseApi.status === 200,
     body: responseApi.data,

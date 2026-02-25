@@ -3,7 +3,6 @@
 import { CustomForm } from "@/components/custom-components/server/form/Form"
 import { SingInSubmit } from "./submit";
 import CustomInput from "@/components/custom-components/server/form/Input";
-import Link from "next/link";
 import { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -20,7 +19,7 @@ export const SingInForm = () => {
         alert("<h1> ops</h1>")
       }
     }
-  },[state])
+  },[state, router])
 
   return(
     <>

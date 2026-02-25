@@ -1,4 +1,5 @@
 'use client'
+import { useEffect, useState, useActionState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -8,68 +9,67 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
+import { Field } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
- import { Field } from "@/components/ui/field"
- import { Label } from "@/components/ui/label"
+import { Label } from "@/components/ui/label"
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useEffect, useState } from "react"
-import { Detail } from "../../_services/api"
 import { Update } from "../../_actions/submit"
 import Form from "next/form"
-import { useActionState } from "react"
-import { CustomItem } from "@/components/custom-components/item/item"
+import { Checkbox } from "@/components/ui/checkbox"
+import { findAllProducts } from "../../_services/shopping_list-product-link-api"
 
+type updateProductDialo = {
+  content: {
+    shoppingLists: any
+    categories: {id:number, products:any[]}[]
+    products: any[]
+  }
+  onClose: ()=>void
+  onSubmit: ()=>void
+}
 
 export function UpdateDialog({
   content:{
     shoppingLists,
+    categories,
   },
   onClose,
   onSubmit,
-}:{
-  content:{shoppingLists:any}
-  onClose: ()=>void
-  onSubmit: ()=>void
-}) {
+}:updateProductDialo) {
+
   
   const [state, action] = useActionState(Update, null)
   const [type, setType] = useState<any>('')
-  const [name, setName] = useState<any>('')
-  const [shopppingListExecutions, setShopppingListExecutions] = useState<any>([])
+  const [wasCheckedInput, setWasCheckedInput] = useState<boolean>(false)
+  const [shoppingListcategories, setShoppingListcategories] = useState<any>([])
+  const [shoppingListCategoryProducts, setShoppingListCategoryProducts] = useState<any>([])
   
   useEffect(()=>{
-    const reload = async () => {
-      if (!shoppingLists.id) return
+    const findListProducts = async () => {
+      const products = (await findAllProducts(shoppingLists.id)).body
+      setShoppingListCategoryProducts(products)
+    }
 
-      const shoppingList = (await Detail(shoppingLists.id)).body
-      //Pegar os produtos da lista
+    if(shoppingLists.id){
+      findListProducts()
+    }
 
-      if(state){
-        setName(state.name ? String(state.name) : shoppingList.name)
-        setType(state.type ? String(state.type) : shoppingList.type)
-        setShopppingListExecutions(state.executions ? String(state.executions) : shoppingList.executions)
-        onSubmit()
-      }else{
-        setName( shoppingList.name)
-        setType( shoppingList.type )
-        setShopppingListExecutions( shoppingList.executions )
-      }
-    } 
-    reload()
-
-  }, [state])
-
+    if(state){
+      onSubmit()
+    }
+  }, [state, shoppingLists, onSubmit])
+ 
   return (
     <Dialog open={true} onOpenChange={()=>{}}>
-        <DialogContent className="md:w-md">
+        <DialogContent className="md: max-h-full">
           <Form className="flex flex-col gap-10 p-5" action={action} > 
             <div className="flex flex-col gap-6">
               <DialogHeader>
-                <DialogTitle>Update Shopping List</DialogTitle>
+                <DialogTitle>New List</DialogTitle>
                 <DialogDescription>
-                Identifier: {shoppingLists?.id}
+                
                 </DialogDescription>
               </DialogHeader>
             
@@ -78,15 +78,14 @@ export function UpdateDialog({
                 <Input 
                   name={'name'} 
                   type={"text"}
-                  placeholder={name} 
-                  defaultValue={name} 
                   required={true}
+                  defaultValue={shoppingLists.name}
                 ></Input>
               </Field>
-              
+             
               <Field>
                 <Label>Type</Label>
-                <Select name={'type'} defaultValue={type}  onValueChange={setType}>
+                <Select name={'type'} defaultValue={shoppingLists.type} onValueChange={setType}>
                   <SelectTrigger>
                     <SelectValue placeholder={'select a type'}/>
                   </SelectTrigger>
@@ -100,54 +99,115 @@ export function UpdateDialog({
                   </SelectContent>
                 </Select>
               </Field>
-
-              {
-                //Adicionar o campo. de produtos da lista, listando todos os produtos para poder refazer a vinculação.
-              }
-              
+            
               <Field>
-                <Label>Executions</Label>
-                <div className="flex flex-col max-h-50 h-fit overflow-y-scroll gap-2 pl-4">
-                    {shopppingListExecutions.map((i)=>{
-                      return (
-                        <div key={i.id} className="flex flex-row gap-3">
-                          <CustomItem 
-                            id={i.id}
-                            itemTitle={i.created}
-                            >
-                              <Button>
 
-                              </Button>
-                            </CustomItem>
-                          <p>{i.name}</p>
+              <Field>
+                <Label>Categories and Products</Label>
+                <div className="flex flex-col max-h-100 overflow-y-scroll gap-2 pl-4">
+                    {categories?.map((c:any)=>{
+                      return (
+                        <div key={c.id} className="">
+                          <div className="flex flex-col content-start justify-between">
+                            <div className="flex flex-row content-start justify-between">
+                              <b>{c.name}</b>
+                              <b>Qtd</b>
+                            </div>
+                            <div>
+                              {
+                                !c.products && <small>Not found</small>
+                              }
+                              
+                              {c.products?.map((p:any) => {
+                                if(!p) return
+
+                                let checked = false
+                                let amount = undefined
+                                
+                                const listProducts:any[] = state?.products ? state.products : shoppingListCategoryProducts
+                                return <div className="flex flex-row content-start justify-between p-0.5">
+                                  <div key={p.id} className="flex flex-row gap-4">
+                                    <Checkbox
+                                      checked={listProducts.some(
+                                          (item)=> {
+                                            if(item.categories_id.toString()+item.products_id == c.id+p.id){
+                                              checked = true
+                                              amount = item.amount
+                                              return true
+                                            }
+                                          }
+                                      )}
+                                      id={p.id.toString()}
+                                      onCheckedChange={(value) => {
+                                        const checked = value === true
+                                        setWasCheckedInput(checked)
+                                        setShoppingListCategoryProducts((prev:any) =>
+                                          checked
+                                          ? [...prev, { 
+                                              uniqueId: c.id+'-'+p.id,
+                                              ...p
+                                            }]
+                                          : prev.filter((pr:any) => pr.uniqueId != c.id+'-'+p.id)
+                                        )
+                                        setWasCheckedInput(false)
+                                      }}
+                                    />
+                                  {p?.name}
+                                  </div>
+                                  <input 
+                                    type="number" 
+                                    className={'w-10 border'} 
+                                    required={wasCheckedInput}
+                                    defaultValue={checked ? amount : undefined}
+                                    onChange={(e)=>{
+                                      const currentItems = shoppingListcategories[0] != null ? shoppingListcategories : undefined
+                                      const newItem = {
+                                        ...p,
+                                        categories_id: c.id,
+                                        amount: e.target.value
+                                      }
+                                      const toIncrement = currentItems ? [...currentItems, newItem] : [newItem]
+                                      setShoppingListcategories(toIncrement)}}
+                                    />
+                                </div>
+                              })}
+                            </div>
+                          </div>
                         </div>
                       )
                     })}
                 </div>
               </Field>
 
-              
-              <Field>
+
                 <input
                   type="hidden"
                   name="ID"
-                  value={String(shoppingLists.id)}
+                  value={shoppingLists.id}
                 />
+
                 <input
                   type="hidden"
                   name="type"
                   value={type}
                 />
+
+                <input
+                  type="hidden"
+                  name="shoppingListCategories"
+                  value={JSON.stringify(shoppingListcategories)}
+                />
+                
               </Field>
             </div>
             <DialogFooter>
               <DialogClose asChild>
                 <Button className={'cursor-pointer'} variant="outline" onClick={onClose} >Cancel</Button>
               </DialogClose>
-              <Button className={'cursor-pointer'} type="submit">Save changes</Button>
+              <Button className={'cursor-pointer'} type="submit">Save</Button>
             </DialogFooter>
           </Form>
         </DialogContent>
-      </Dialog>
+    </Dialog>
   )
 }

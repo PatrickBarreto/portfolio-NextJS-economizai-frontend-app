@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Field, FieldGroup } from "@/components/ui/field"
+import { Field } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -43,7 +43,7 @@ export function CreateDialog({
     if(state){
       onSubmit()
     }
-  }, [state])
+  }, [state, onSubmit])
  
   return (
     <Dialog open={true} onOpenChange={()=>{}}>
@@ -84,7 +84,7 @@ export function CreateDialog({
               <Field>
                 <Label>Categories</Label>
                 <div className="flex flex-col h-50 overflow-y-scroll gap-2 pl-4">
-                    {categories.map((c)=>{
+                    {categories.map((c: any)=>{
                       return (
                         <div key={c.id} className="flex flex-row gap-3">
                           <Checkbox

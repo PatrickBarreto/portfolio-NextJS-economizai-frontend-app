@@ -10,7 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
- import { Field, FieldGroup } from "@/components/ui/field"
+ import { Field } from "@/components/ui/field"
  import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useEffect, useState } from "react"
@@ -48,7 +48,7 @@ export function UpdateDialog({
     const reload = async () => {
       if (!category.id) return
       
-      const categoryDetail = (await Detail(category.id)).body
+      const categoryDetail:{products:any[], brands:any[]} = (await Detail(category.id)).body
     
       if(state){
         setName(state?.name ? state.name : category.name)
@@ -63,7 +63,7 @@ export function UpdateDialog({
     }
     
     reload()
-  }, [state])
+  }, [state, onSubmit])
  
   return (
     <Dialog open={true} onOpenChange={()=>{}}>

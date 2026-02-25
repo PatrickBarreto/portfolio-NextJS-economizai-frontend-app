@@ -33,7 +33,7 @@ export const Delete = async (id: number) => {
 }
 
 export const Update = async (id:string, body:any) => {
-  const categories = JSON.parse(body.categories).map((c)=>{
+  const categories = JSON.parse(body.categories).map((c:any)=>{
     return c.id
   })
   const responseApi:any = await Api('/brands/'+id, {
@@ -53,7 +53,7 @@ export const Update = async (id:string, body:any) => {
 }
 
 export const Create = async (body:any) => {
-  const categories = JSON.parse(body.categories).map((c)=>{
+  const categories = JSON.parse(body.categories).map((c:any)=>{
     return c.id
   })
   const responseApi:any = await Api('/brands/create', {

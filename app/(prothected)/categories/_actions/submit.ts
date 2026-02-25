@@ -24,7 +24,7 @@ export const Update = async (prev:any, formData:FormData) => {
 
   const parsed = categoriesSchema.parse(category)
   
-  await UpdateCategory(id, parsed)
+  await UpdateCategory(Number(id), parsed)
 
   return {
     ...parsed

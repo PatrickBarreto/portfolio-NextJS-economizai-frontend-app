@@ -44,7 +44,7 @@ export function CreateDialog({
     if(state){
       onSubmit()
     }
-  }, [state])
+  }, [state, onSubmit])
  
 
   return (

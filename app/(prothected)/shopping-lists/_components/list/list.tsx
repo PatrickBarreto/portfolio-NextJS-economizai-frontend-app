@@ -56,7 +56,7 @@ export const List = ({shoppingLists, categories, products}:ShoppingListsList) =>
                   className={'bg-white shadow-md md:w-1/2'}
                 >
                   <>
-                    <Button onClick={(e)=>console.log(i.id)}>Execute</Button>
+                    <Button onClick={()=>console.log(i.id)}>Execute</Button>
                     <UpdateDeleteButton
                       ToggleRemove={() => remove(i.id)}
                       ToggleUpdate={() => ToggleUpdate(i)}
@@ -73,6 +73,8 @@ export const List = ({shoppingLists, categories, products}:ShoppingListsList) =>
         <UpdateDialog
           content={{
             shoppingLists: selected,
+            categories,
+            products
           }}
           onClose={() => ToggleUpdate()}
           onSubmit={() => ToggleUpdate(selected)}
@@ -82,7 +84,6 @@ export const List = ({shoppingLists, categories, products}:ShoppingListsList) =>
       {newItem && (
         <CreateDialog
           content={{
-            shoppingLists,
             categories,
             products
           }}

@@ -7,11 +7,10 @@ import {
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
- import { Field, FieldGroup } from "@/components/ui/field"
+ import { Field } from "@/components/ui/field"
  import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -60,7 +59,7 @@ export function UpdateProductDialog({
     } 
     reload()
 
-  }, [state])
+  }, [state, onSubmit])
 
   return (
     <Dialog open={true} onOpenChange={()=>{}}>

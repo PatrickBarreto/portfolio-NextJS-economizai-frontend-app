@@ -4,7 +4,7 @@ import { NavMenu } from "@/components/custom-components/menu-nav/menu-links";
 import Link from "next/link";
 import { TopMenuNavigation } from "@/components/custom-components/server/header";
 import Image from "next/image";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarGroup, SidebarHeader, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 
 export const metadata: Metadata = {

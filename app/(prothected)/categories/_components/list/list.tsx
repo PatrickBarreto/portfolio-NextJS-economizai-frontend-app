@@ -1,10 +1,8 @@
 'use client'
 import { CustomItem } from "@/components/custom-components/item/item"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Delete, Find, Detail } from "../../_services/categoriesApi"
 import { UpdateDialog } from "../dialogs/update"
-import { Input } from "@/components/ui/input"
 import { CreateDialog } from "../dialogs/create"
 import { searchHandler } from "@/src/search/search"
 import { useCategories } from "../../_hooks/use-categories"

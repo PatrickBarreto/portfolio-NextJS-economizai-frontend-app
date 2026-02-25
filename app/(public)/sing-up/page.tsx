@@ -1,4 +1,4 @@
-import { SingUpForm } from "./_form/page";
+import { SingUpForm } from "./_components/_form/page";
 
 export default function singUp() {
 

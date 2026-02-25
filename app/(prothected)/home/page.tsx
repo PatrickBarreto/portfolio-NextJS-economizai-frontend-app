@@ -1,4 +1,4 @@
-import { checkToken, logout } from "../_checkToken/checkToken"
+import { checkToken } from "../_checkToken/checkToken"
 
 export default async function Home() {
   await checkToken()

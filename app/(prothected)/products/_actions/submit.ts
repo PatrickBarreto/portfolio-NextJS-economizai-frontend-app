@@ -11,7 +11,7 @@ export const Update = async (prev:any, formData:FormData) => {
   const productSchemma = z.object({
     name: z.string().optional(),
     type: z.string().optional(),
-    categories: z.string()
+    categories: z.string().optional()
   })
 
   const Product = {
@@ -22,7 +22,7 @@ export const Update = async (prev:any, formData:FormData) => {
 
   const parsed = productSchemma.parse(Product)
   
-  await updateProduct(id, parsed)
+  await updateProduct(String(id), parsed)
 
   return {
     ...parsed,
@@ -36,9 +36,9 @@ export const Create = async (prev:any, formData:FormData) => {
   const categoriesText = formData.get('productCategories') || ''
   
   const productSchemma = z.object({
-    name: z.string().optional(),
-    type: z.string().optional(),
-    categories: z.string().optional()
+    name: z.string(),
+    type: z.string(),
+    categories: z.string()
   })
 
   const Product = {

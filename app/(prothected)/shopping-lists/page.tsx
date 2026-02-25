@@ -12,9 +12,9 @@ export default async function Products() {
     <div className="flex flex-col gap-15 w-full mt-10 px-10">
       <h1>Shopping Lists</h1>
       <List 
-        shoppingLists={shoppingLists.body || []} 
-        categories={shoppingCategories.body || []} 
-        products={productsLists.body || []}
+        shoppingLists={shoppingLists.ok ?  shoppingLists.body : []} 
+        categories={shoppingCategories.ok ?  shoppingCategories.body : []} 
+        products={productsLists.ok ?  productsLists.body : []}
       />
     </div>
   )

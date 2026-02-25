@@ -2,7 +2,6 @@
 import { CustomItem } from "@/components/custom-components/item/item"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Delete as deleteBrands, Find as findBrands } from "../../_services/api"
 import { UpdateDialog } from "../dialogs/update"
 import { CreateDialog } from "../dialogs/create"
 import { searchHandler } from "@/src/search/search"

@@ -22,7 +22,7 @@ export const Update = async (prev:any, formData:FormData) => {
 
   const parsed =  brandSchema.parse(Brands)
   
-  await updateBrands(id, parsed)
+  await updateBrands(String(id), parsed)
 
   return {
     ...parsed,

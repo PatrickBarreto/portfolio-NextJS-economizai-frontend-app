@@ -18,14 +18,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Create } from "../../_actions/submit"
 import Form from "next/form"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Detail } from "@/app/(prothected)/categories/_services/categoriesApi"
-import CustomInput from "@/components/custom-components/server/form/Input"
 
 type createProductDialo = {
   content: {
-    shoppingLists: any[]
-    categories: any[]
-    products: any[]
+    categories: {id:number, name:string, products:any[] }[]
+    products: {id:number, name:string, categories:any[] }[]
   }
   onClose: ()=>void
   onSubmit: ()=>void
@@ -33,9 +30,7 @@ type createProductDialo = {
 
 export function CreateDialog({
   content:{
-    shoppingLists,
     categories,
-    products
   },
   onClose,
   onSubmit,
@@ -44,18 +39,19 @@ export function CreateDialog({
   
   const [state, action] = useActionState(Create, null)
   const [type, setType] = useState<any>('')
-  const [shoppingListProducts, setShoppingListProducts] = useState<any>([])
+  const [wasCheckedInput, setWasCheckedInput] = useState<boolean>(false)
+  const [shoppingListcategories, setShoppingListcategories] = useState<any>([])
+  const [shoppingListCategoryProducts, setShoppingListCategoryProducts] = useState<any>([])
   
   useEffect(()=>{
     if(state){
-      // shoppingListProducts()
       onSubmit()
     }
-  }, [state])
+  }, [state, onSubmit])
  
   return (
     <Dialog open={true} onOpenChange={()=>{}}>
-        <DialogContent className="md:w-md">
+        <DialogContent className="md: max-h-full">
           <Form className="flex flex-col gap-10 p-5" action={action} > 
             <div className="flex flex-col gap-6">
               <DialogHeader>
@@ -73,6 +69,7 @@ export function CreateDialog({
                   required={true}
                 ></Input>
               </Field>
+             
               <Field>
                 <Label>Type</Label>
                 <Select name={'type'} onValueChange={setType}>
@@ -89,47 +86,66 @@ export function CreateDialog({
                   </SelectContent>
                 </Select>
               </Field>
+            
               <Field>
 
               <Field>
-              <Label>Products</Label>
-                <div className="flex flex-col max-h-50 h-fit overflow-y-scroll gap-2 pl-4">
-                    {products?.map((p)=>{
+                <Label>Categories and Products</Label>
+                <div className="flex flex-col max-h-100 overflow-y-scroll gap-2 pl-4">
+                    {categories?.map((c)=>{
                       return (
-                        <div className="">
-                          <div className="flex flex-row content-start justify-between">
-                            <div key={p.id} className="flex flex-row gap-4">
-                              <Checkbox
-                                checked={shoppingListProducts.some((product)=> product == p.id)}
-                                id={p.id.toString()}
-                                onCheckedChange={(value) => {
-                                  const checked = value === true
-                                  setShoppingListProducts(prev =>
-                                    checked
-                                    ? [...prev, p.id]
-                                    : prev.filter(item => item !== p.id)
-                                  )
-                                }}
-                              />
-                              <p>{p.name}</p>
+                        <div key={c.id} className="">
+                          <div className="flex flex-col content-start justify-between">
+                            <div className="flex flex-row content-start justify-between">
+                              <b>{c.name}</b>
+                              <b>Qtd</b>
                             </div>
-                            <input name={'products['+p.id+']'} type="number" className={'w-10 border'} onChange={(e)=>{shoppingListProducts({
-                              product: p,
-                              amount: e.target.value
-                            })}}/>
+                            <div>
+                              { !c.products && <small>Not found</small> }
+                              
+                              { c.products?.map(p => {
+                                const listProducts = state?.products ? state.products : shoppingListCategoryProducts
+                                return <div key={c.id+p.id} className="flex flex-row content-start justify-between p-0.5">
+                                  <div key={p.id} className="flex flex-row gap-4">
+                                    <Checkbox
+                                      checked={listProducts.some(
+                                          (item:any)=> item.uniqueId == c.id+'-'+p.id,
+                                      )}
+                                      id={p.id.toString()}
+                                      onCheckedChange={(value) => {
+                                        const checked = value === true
+                                        setWasCheckedInput(checked)
+                                        setShoppingListCategoryProducts((prev:any) =>
+                                          checked
+                                          ? [...prev, { 
+                                              uniqueId: c.id+'-'+p.id,
+                                              ...p
+                                            }]
+                                          : prev.filter((pr:any) => pr.uniqueId != c.id+'-'+p.id)
+                                        )
+                                        setWasCheckedInput(false)
+                                      }}
+                                    />
+                                  {p?.name}
+                                  </div>
+                                  <input 
+                                    type="number" 
+                                    className={'w-10 border'} 
+                                    required={wasCheckedInput}
+                                    onChange={(e)=>{setShoppingListcategories([...shoppingListcategories, {
+                                      ...p,
+                                      categories_id: c.id,
+                                      amount: e.target.value
+                                    }])}}/>
+                                </div>
+                              })}
+                            </div>
                           </div>
                         </div>
                       )
                     })}
                 </div>
               </Field>
-
-
-                <input
-                  type="hidden"
-                  name="ID"
-                  value={shoppingLists.id}
-                />
 
                 <input
                   type="hidden"
@@ -139,8 +155,8 @@ export function CreateDialog({
 
                 <input
                   type="hidden"
-                  name="shoppingListProducts"
-                  value={shoppingListProducts}
+                  name="shoppingListCategories"
+                  value={JSON.stringify(shoppingListcategories)}
                 />
                 
               </Field>
@@ -153,6 +169,6 @@ export function CreateDialog({
             </DialogFooter>
           </Form>
         </DialogContent>
-      </Dialog>
+    </Dialog>
   )
 }
