@@ -26,7 +26,7 @@ export default async function ProthectedLayout({
   ];
 
   return (
-    <html lang="en">
+    <html lang="en-US" translate="no">
       <body
         className={''}
       >

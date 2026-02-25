@@ -22,7 +22,7 @@ export default function RootLayout({
     {label: "Sing up", link: "/sing-up", id:'sing-up'},
   ];
   return (
-    <html lang="en">
+    <html lang="en-US" translate="no">
       <body>
         <SidebarProvider className="overflow-auto bg-(--wise-spend-green) md:bg-green-100">
           <div className="block md:hidden">
