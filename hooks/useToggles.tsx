@@ -1,9 +1,8 @@
 'use client'
 
-import { useState } from "react"
 type TogglesType = {
-    defaultList:any[]
-    newItem:any
+    defaultList:unknown[]
+    newItem:unknown
     setItems:Function
     setNewItem:Function
     setSelected:Function
@@ -16,13 +15,13 @@ export const useToggles = ({
   setSelected
 }:TogglesType) => {
 
-  const ToggleCreate = (item?:any) => {
+  const ToggleCreate = (item?:unknown) => {
     const items = item ? item : defaultList
     setItems(items)
     setNewItem(!newItem)
   }
   
-  const ToggleUpdate = (item?:any) => {
+  const ToggleUpdate = (item?:unknown) => {
     setSelected(item || null)
     setItems(defaultList)
   }

@@ -11,7 +11,7 @@ export const prepareQueryStrings = (ontions:{
     return preparedQueryString
 }
 
-export const Api = async <T = unknown>(path: string, info:RequestInit = {
+export const Api = async <T = any>(path: string, info:RequestInit = {
   method: 'GET',
   cache: 'no-cache'
 }): Promise<{
