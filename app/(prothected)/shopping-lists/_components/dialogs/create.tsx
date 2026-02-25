@@ -48,7 +48,7 @@ export function CreateDialog({
       onSubmit()
     }
   }, [state, onSubmit])
- 
+
   return (
     <Dialog open={true} onOpenChange={()=>{}}>
         <DialogContent className="md: max-h-full">
@@ -101,9 +101,11 @@ export function CreateDialog({
                               <b>Qtd</b>
                             </div>
                             <div>
-                              { !c.products && <small>Not found</small> }
+                              { (!c.products || c.products[0] == null )&& <small>Not found</small> }
                               
                               { c.products?.map(p => {
+                                if(p === null) return 
+
                                 const listProducts = state?.products ? state.products : shoppingListCategoryProducts
                                 return <div key={c.id+p.id} className="flex flex-row content-start justify-between p-0.5">
                                   <div key={p.id} className="flex flex-row gap-4">
@@ -127,17 +129,18 @@ export function CreateDialog({
                                       }}
                                     />
                                   {p?.name}
+                                    </div>
+                                    <input 
+                                      type="number" 
+                                      className={'w-10 border'} 
+                                      required={wasCheckedInput}
+                                      onChange={(e)=>{setShoppingListcategories([...shoppingListcategories, {
+                                        ...p,
+                                        categories_id: c.id,
+                                        amount: e.target.value
+                                      }])}}
+                                    />
                                   </div>
-                                  <input 
-                                    type="number" 
-                                    className={'w-10 border'} 
-                                    required={wasCheckedInput}
-                                    onChange={(e)=>{setShoppingListcategories([...shoppingListcategories, {
-                                      ...p,
-                                      categories_id: c.id,
-                                      amount: e.target.value
-                                    }])}}/>
-                                </div>
                               })}
                             </div>
                           </div>
