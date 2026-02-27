@@ -1,9 +1,12 @@
+import { PublicMenu } from "../_components/menu";
+import { publicMenuLinks } from "../layout";
 import { SingUpForm } from "./_components/_form/page";
 
 export default function singUp() {
 
   return(
     <>
+      <PublicMenu links={publicMenuLinks}/>
        <div className="
         flex 
         flex-col
@@ -13,7 +16,8 @@ export default function singUp() {
           hidden
           items-center 
           w-full 
-          -mt-(--header-height) 
+          p-10
+          md:-mt-(--header-height) 
           md:flex
           ">
             <h2>Here, you always pay less for the same thing.</h2>
@@ -22,9 +26,10 @@ export default function singUp() {
           flex
           justify-center
           items-center
-          h-[calc(100vh-var(--header-height))]
           w-full 
+          h-screen
           bg-(--wise-spend-green)
+          h-[calc(100vh-var(--header-height))]
           ">
           <SingUpForm />
         </div>

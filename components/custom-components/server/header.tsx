@@ -3,13 +3,15 @@ export const TopMenuNavigation = ({children}: {
 }) => {
   return (
     <header className="
-      bg-(--wise-spend-green) 
+      bg-green-50
       h-screen 
       w-30
       pr-5
       pl-5
       fixed
-      text-white
+      border-b
+      z-9
+      
       
       md:flex 
       md:w-full 

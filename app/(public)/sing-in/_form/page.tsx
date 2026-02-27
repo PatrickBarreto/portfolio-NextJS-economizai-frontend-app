@@ -33,9 +33,8 @@ export const SingInForm = () => {
           rounded-md
           items-center
           bg-white
-          h-fit
-          w-100
-          p-10"
+          p-10
+          "
         >
         <>
           <CustomInput 
