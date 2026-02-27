@@ -372,41 +372,6 @@ export default function LandingPage() {
                 </a>
               </div>
             </div>
-
-            {/* MOCK UI */}
-            <div className="lp-mock">
-              <div className="lp-card">
-                <div className="lp-card-label">Shopping list · 4 items</div>
-
-                {[
-                  {icon:'🥛', name:'Whole milk 1L', store:'Best at Walmart', price:'$1.89'},
-                  {icon:'🍞', name:'Whole grain bread', store:"Best at Trader Joe's", price:'$2.49'},
-                  {icon:'🥚', name:'Eggs dozen', store:'Best at Costco', price:'$3.29'},
-                  {icon:'🧀', name:'Cheddar cheese', store:'Best at Aldi', price:'$4.19'},
-                ].map((item, i) => (
-                  <div className="lp-card-item" key={i}>
-                    <div className="lp-card-left">
-                      <div className="lp-card-icon">{item.icon}</div>
-                      <div>
-                        <div className="lp-card-name">{item.name}</div>
-                        <div className="lp-card-store">{item.store}</div>
-                      </div>
-                    </div>
-                    <span className="lp-card-price-best">{item.price}</span>
-                  </div>
-                ))}
-
-                <div className="lp-card-savings">
-                  <div className="lp-card-savings-label">You're saving</div>
-                  <div className="lp-card-savings-value">$6.40 / week</div>
-                </div>
-              </div>
-
-              <div className="lp-badge">
-                <strong>$332</strong>
-                saved this year
-              </div>
-            </div>
           </div>
         </section>
 
