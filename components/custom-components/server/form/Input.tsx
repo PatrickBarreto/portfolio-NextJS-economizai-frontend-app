@@ -8,7 +8,7 @@ export default function CustomInput({value, type, name, label, placeholder, inpu
   children?: React.ReactElement 
 }) {
   return (
-    <div className="flex flex-col">
+    <div className='flex w-full justify-center'>
       {label && <label htmlFor={name}> {label} </label>}
       <span>{children}</span>
       <input className={inputClassName} id={name} type={type} name={name} placeholder={placeholder} value={value}/>

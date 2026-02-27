@@ -10,15 +10,15 @@ export default function singIn() {
       <div className="
         flex 
         flex-col
-        w-full
+        w-screen
         h-full
         md:flex-row 
         ">
         <div className="
           hidden
           items-center 
-          w-full 
-          -mt-(--header-height) 
+          -mt-(--header-height)
+          md:w-1/2
           md:flex
           ">
           <h2></h2>
@@ -27,10 +27,12 @@ export default function singIn() {
           flex
           justify-center
           items-center
-          w-full 
+          p-10
           h-screen
           bg-(--wise-spend-green)
           h-[calc(100vh-var(--header-height))]
+          w-screen
+          md:w-1/2
           ">
           <SingInForm />
         </div>

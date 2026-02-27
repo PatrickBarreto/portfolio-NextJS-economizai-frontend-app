@@ -32,20 +32,23 @@ export const SingInForm = () => {
           gap-5
           rounded-md
           items-center
+          w-full
+          max-w-100
           bg-white
+          py-10
           p-10
           "
         >
         <>
           <CustomInput 
             name="email" 
-            inputClassName="w-80 h-10 p-3" 
+            inputClassName="w-full h-10 p-3" 
             type="text" 
             placeholder="Your email"
           />
           <CustomInput 
             name="password" 
-            inputClassName="w-80 h-10 p-3" 
+            inputClassName="w-full h-10 p-3" 
             type="password" 
             placeholder="Your password"
           />

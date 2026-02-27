@@ -7,18 +7,20 @@ export default function singUp() {
   return(
     <>
       <PublicMenu links={publicMenuLinks}/>
-       <div className="
+      <div className="
         flex 
         flex-col
+        w-screen
+        h-full
         md:flex-row 
         ">
         <div className="
           hidden
           items-center 
-          w-full 
-          p-10
-          md:-mt-(--header-height) 
+          -mt-(--header-height)
+          md:w-1/2
           md:flex
+          p-10
           ">
             <h2>Here, you always pay less for the same thing.</h2>
         </div>
@@ -26,10 +28,12 @@ export default function singUp() {
           flex
           justify-center
           items-center
-          w-full 
+          p-10
           h-screen
           bg-(--wise-spend-green)
           h-[calc(100vh-var(--header-height))]
+          w-screen
+          md:w-1/2
           ">
           <SingUpForm />
         </div>

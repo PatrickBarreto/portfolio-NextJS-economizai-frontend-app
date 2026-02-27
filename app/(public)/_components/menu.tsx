@@ -27,14 +27,14 @@ export const PublicMenu = ({
 						</SidebarGroup>
 					</SidebarContent>
 				</Sidebar>
-				<div className={triggerC+" h-full fixed"}>
-					<SidebarTrigger className={triggerC+" hover:"+triggerC} />
+				<div className={triggerC+" f-fit fixed"}>
+					<SidebarTrigger className={triggerC+" hover:"+triggerC+"fixed"}/>
 				</div>
 			</div>
 			<div className="hidden md:block">
 				{!disableMd && <TopMenuNavigation>
 				<>
-					<Link href={'/home'}>
+					<Link href={'/'}>
 					<Image src={'/assets/logo.png'} alt='logo' width={150} height={10}></Image>
 					</Link>
 					<NavMenu menuList={links} className="md:flex flex-row gap-10 text-sm"></NavMenu>

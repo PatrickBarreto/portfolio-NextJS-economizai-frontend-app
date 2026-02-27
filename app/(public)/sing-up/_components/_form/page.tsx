@@ -19,33 +19,35 @@ export const SingUpForm = () => {
           gap-5
           rounded-md
           items-center
+          w-full
+          max-w-100
           bg-white
-          h-fit
-          w-100
-          p-10"
+          py-10
+          p-10
+          "
         >
         <>
           <CustomInput 
             name="name" 
-            inputClassName="w-80 h-10 p-3" 
+            inputClassName="w-full h-10 p-3"
             type="text" 
             placeholder="Your name"
           />
           <CustomInput 
             name="email" 
-            inputClassName="w-80 h-10 p-3" 
+            inputClassName="w-full h-10 p-3"
             type="email" 
             placeholder="Your email"
           />
           <CustomInput 
             name="phone" 
-            inputClassName="w-80 h-10 p-3" 
+            inputClassName="w-full h-10 p-3"
             type="text" 
             placeholder="Your phone"
           />
           <CustomInput 
             name="password" 
-            inputClassName="w-80 h-10 p-3" 
+            inputClassName="w-full h-10 p-3"
             type="password" 
             placeholder="Your password"
           />

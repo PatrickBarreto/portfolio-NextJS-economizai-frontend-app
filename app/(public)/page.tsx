@@ -29,7 +29,6 @@ export default function LandingPage() {
           display: flex;
           align-items: center;
           padding: 7rem 2.5rem 4rem;
-          position: relative;
           overflow: hidden;
         }
 
@@ -333,7 +332,6 @@ export default function LandingPage() {
           .lp-footer { flex-direction: column; gap: 0.5rem; text-align: center; }
         }
       `}</style>
-
       <div className="lp">
         {/* NAV */}
         <PublicMenu links={publicMenuLinks} triggerColors="transparent" disableMd={false} />
