@@ -3,6 +3,7 @@ import { TopMenuNavigation } from "@/components/custom-components/server/header"
 import { Sidebar, SidebarContent, SidebarGroup, SidebarHeader, SidebarTrigger } from "@/components/ui/sidebar"
 import Image from "next/image"
 import Link from "next/link"
+import { StickyTrigger } from "../../../components/custom-components/custom-trigger"
 
 export const PublicMenu = ({
 	links, triggerColors, disableMd = true
@@ -28,7 +29,7 @@ export const PublicMenu = ({
 					</SidebarContent>
 				</Sidebar>
 				<div className={triggerC+" f-fit fixed"}>
-					<SidebarTrigger className={triggerC+" hover:"+triggerC+"fixed"}/>
+					<StickyTrigger/>
 				</div>
 			</div>
 			<div className="hidden md:block">

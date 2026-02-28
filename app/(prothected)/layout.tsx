@@ -4,6 +4,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { NavMenu } from "@/components/custom-components/menu-nav/menu-links";
 import { CustomSidebar } from "@/components/custom-components/sidebar/sidebar";
 import { checkToken } from "./_checkToken/checkToken";
+import { StickyTrigger } from "@/components/custom-components/custom-trigger";
 
 export const metadata: Metadata = {
   title: "Wise Spend",
@@ -34,8 +35,8 @@ export default async function ProthectedLayout({
           <CustomSidebar>
             <NavMenu menuList={privateMenuLinks} className="flex flex-col gap-5 p-5 text-sm"></NavMenu>
           </CustomSidebar>    
-          <SidebarTrigger/>
-          <main className="h-screen w-screen pt-10 md:pt-(--header-height)">
+          <StickyTrigger/>
+          <main className="h-screen w-screen">
             {children}
           </main>
         </SidebarProvider>
